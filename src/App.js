@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import ListItem from './components/ListItem';
 import { toggleFetch, createEmail } from './slices/emailsSlice';
-import logo from './logo.svg';
+
 import './App.css';
 
 class App extends Component {
@@ -24,42 +25,39 @@ class App extends Component {
   }
 
   render() {
+    const { messages } = this.props;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit
-            {' '}
-            <code>src/App.js</code>
-            {' '}
-            and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {messages.map(message => (
+          <ListItem
+            key={message.id}
+            senderAddress={message.from}
+            subject={message.subject}
+            read={message.read}
+          />
+        ))}
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  messages: state.emails.messages,
+});
+
 const mapDispatchToProps = dispatch => ({
   indicateFetch: () => dispatch(toggleFetch),
-  addEmail: email => dispatch(createEmail({ payload: email })),
+  addEmail: email => dispatch(createEmail(email)),
 });
 
 App.propTypes = {
   indicateFetch: PropTypes.func.isRequired,
   addEmail: PropTypes.func.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(App);
