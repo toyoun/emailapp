@@ -1,14 +1,20 @@
 import { createSlice } from 'redux-starter-kit';
 
 const emailsSlice = createSlice({
-  initialState: [],
+  initialState: {
+    fetching: false,
+    messages: [],
+  },
   reducers: {
+    toggleFetch(state) {
+      state.fetching = !state.fetching; // eslint-disable-line no-param-reassign
+    },
     createEmail(state, action) {
-      state.push(action.payload);
+      state.messages.push(action.payload);
     },
   },
 });
 
 const { actions, reducer } = emailsSlice;
-export const { createPost, updatePost, deletePost } = actions;
+export const { toggleFetch, createEmail } = actions;
 export default reducer;
