@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {
+  BrowserRouter as Router, Link, Route,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import ListItem from './components/ListItem';
@@ -28,16 +31,46 @@ class App extends Component {
     const { messages } = this.props;
 
     return (
-      <div className="App">
-        {messages.map(message => (
-          <ListItem
-            key={message.id}
-            senderAddress={message.from}
-            subject={message.subject}
-            read={message.read}
-          />
-        ))}
-      </div>
+      <Router>
+        <header>
+          <Link to="/view">
+            <button type="submit" className="nav-bar-item">
+              View
+            </button>
+          </Link>
+          <Link to="/create">
+            <button type="submit" className="nav-bar-item">
+              Create
+            </button>
+          </Link>
+        </header>
+        <Route
+          path="/view"
+          render={() => (
+            <div className="App">
+              {messages.map(message => (
+                <ListItem
+                  key={message.id}
+                  senderAddress={message.from}
+                  subject={message.subject}
+                  read={message.read}
+                />
+              ))}
+              <div className="button-bottom">
+                <button className="delete" type="submit">Delete</button>
+              </div>
+            </div>
+          )}
+        />
+        <Route
+          path="/create"
+          render={() => (
+            <div>
+              Hi
+            </div>
+          )}
+        />
+      </Router>
     );
   }
 }
