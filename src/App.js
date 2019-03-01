@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import ListItem from './components/ListItem';
 import CreatePage from './components/CreatePage';
+import ViewPage from './components/ViewPage';
 import { toggleFetch, createEmail, deleteEmail, readEmail } from './slices/emailsSlice';
 
 import './App.css';
@@ -51,15 +52,19 @@ class App extends Component {
           render={() => (
             <div className="App">
               {messages.map(message => (
-                <ListItem
+                <Link 
                   key={message.id}
-                  emailId={message.id}
-                  senderAddress={message.from}
-                  subject={message.subject}
-                  handleReadClick={readClick}
-                  read={message.read}
-                  checked
-                />
+                  to={`/view/${message.id}`}
+                >
+                  <ListItem
+                    emailId={message.id}
+                    senderAddress={message.from}
+                    subject={message.subject}
+                    handleReadClick={readClick}
+                    read={message.read}
+                    checked
+                  />
+                </Link>
               ))}
               <div className="button-bottom">
                 <button
@@ -72,6 +77,21 @@ class App extends Component {
             </div>
           )}
         />
+        <div className="ViewPages">
+          {messages.forEach(message => (
+            <Route 
+              key={message.id}
+              path={`/view/${message.id}`}
+              render={() => (
+                <ViewPage 
+                  senderAddress={message.from}
+                  subject={message.subject}
+                  text={message.text}
+                />
+              )}
+            />
+          ))}
+        </div>
         <Route
           path="/create"
           render={() => (
