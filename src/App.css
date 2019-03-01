@@ -1,0 +1,76 @@
+.delete {
+  color: white;
+  background-color: rgba(255, 89, 29, 0.927);
+  outline-width: 5px;
+  font-size: 20px;
+  padding: 8px 25px;
+}
+
+.send {
+  color: white;
+  background-color: rgb(84, 84, 218);
+  font-size: 20px;
+  padding: 8px 25px;
+}
+
+.button-bottom {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  margin-right: 5em;
+}
+
+.button-bottom:hover {
+  cursor: pointer;
+}
+
+.nav-bar-item {
+  color: white;
+  background-color: rgba(110, 34, 91, 0.729);
+  position: relative;
+  width: 50vw;
+  height: 100px;
+  font-size: 40px;
+}
+
+.nav-bar-item:hover {
+  background-color: rgba(110, 34, 91, 0.842);
+  cursor: pointer;
+}
+
+.create-section {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+  padding: 1rem 5rem;
+  background-color: rgba(222, 222, 222, 0.575);
+}
+
+.textbox {
+  font-size: 20px;
+  padding: 5px;
+  margin: 10px 5px;
+  border-color: lightgrey;
+}
+
+label {
+  font-size: 20px;
+}
+
+#to {
+  width: 50%;
+  height: 30px;
+}
+
+#subject {
+  width: 50%;
+  height: 30px;
+}
+
+#newMsg {
+  width: 90vw;
+  height: 10em;
+}

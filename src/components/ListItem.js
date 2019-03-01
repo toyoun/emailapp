@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './ListItem.css';
 
-const ListItem = ({
-  checked, senderAddress, subject, read,
-}) => (
-  <div className={read ? 'read' : 'unread'}>
-    <input type="checkbox" checked={checked} />
-    <p>{senderAddress}</p>
-    <p>{subject}</p>
-  </div>
-);
-
-ListItem.propTypes = {
-  checked: PropTypes.bool,
-  senderAddress: PropTypes.string.isRequired,
-  subject: PropTypes.string.isRequired,
-  read: PropTypes.bool.isRequired,
+class ListItem extends Component {
+  render() {
+    return (
+      <div
+        className={`message ${this.props.read ? 'read' : 'unread'}`}
+        onClick={() => this.props.handleReadClick(this.props.emailId)}
+      >
+        <input
+          className="checkbox"
+          type="checkbox"
+        />
+        <p className="sender">{this.props.senderAddress}</p>
+        <p className="subject">{this.props.subject}</p>
+      </div>
+    )
+  }
 };
 
-ListItem.defaultProps = {
-  checked: false,
+ListItem.propTypes = {
+  senderAddress: PropTypes.string.isRequired,
+  subject: PropTypes.string.isRequired,
 };
 
 export default ListItem;

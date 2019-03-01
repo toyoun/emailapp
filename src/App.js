@@ -6,7 +6,8 @@ import {
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import ListItem from './components/ListItem';
-import { toggleFetch, createEmail } from './slices/emailsSlice';
+import CreatePage from './components/CreatePage';
+import { toggleFetch, createEmail, deleteEmail, readEmail } from './slices/emailsSlice';
 
 import './App.css';
 
@@ -28,14 +29,14 @@ class App extends Component {
   }
 
   render() {
-    const { messages } = this.props;
+    const { messages, readClick } = this.props;
 
     return (
       <Router>
         <header>
-          <Link to="/view">
+          <Link to="/">
             <button type="submit" className="nav-bar-item">
-              View
+              List
             </button>
           </Link>
           <Link to="/create">
@@ -45,19 +46,28 @@ class App extends Component {
           </Link>
         </header>
         <Route
-          path="/view"
+          exact
+          path="/"
           render={() => (
             <div className="App">
               {messages.map(message => (
                 <ListItem
                   key={message.id}
+                  emailId={message.id}
                   senderAddress={message.from}
                   subject={message.subject}
+                  handleReadClick={readClick}
                   read={message.read}
+                  checked
                 />
               ))}
               <div className="button-bottom">
-                <button className="delete" type="submit">Delete</button>
+                <button
+                  className="delete"
+                  type="submit"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           )}
@@ -65,9 +75,7 @@ class App extends Component {
         <Route
           path="/create"
           render={() => (
-            <div>
-              Hi
-            </div>
+            <CreatePage />
           )}
         />
       </Router>
@@ -82,11 +90,15 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   indicateFetch: () => dispatch(toggleFetch),
   addEmail: email => dispatch(createEmail(email)),
+  removeEmail: emailId => dispatch(deleteEmail(emailId)),
+  readClick: emailId => dispatch(readEmail(emailId)),
 });
 
 App.propTypes = {
   indicateFetch: PropTypes.func.isRequired,
   addEmail: PropTypes.func.isRequired,
+  removeEmail: PropTypes.func.isRequired,
+  readClick: PropTypes.func.isRequired,
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
